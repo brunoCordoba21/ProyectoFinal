@@ -10,8 +10,8 @@ El proyecto busca centralizar la información relacionada con clientes, guías, 
 
 | Integrante            | Rol        |
 | --------------------- | ---------- |
-| **Bruno**  [Cordoba]   | Desarrollo |
-| **Brenda [Cordoba]**   | Desarrollo |
+| **Bruno Cordoba**   | Desarrollo |
+| **Brenda Cordoba**   | Desarrollo |
 
 ### 📸 Equipo
 
@@ -21,7 +21,7 @@ El proyecto busca centralizar la información relacionada con clientes, guías, 
 </p>
 
 <p align="center">
-  <b>Bruno [Cordoba]</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Brenda [Cordoba]</b>
+  <b>Bruno Cordoba</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Brenda Cordoba</b>
 </p>
 
 ---
@@ -128,4 +128,4 @@ Al finalizar el proyecto se entregará:
 
 **Proyecto académico**
 
-**Integrantes:** [Tu nombre] & Brenda [Apellido]
+**Integrantes:** Bruno Cordoba & Brenda Cordoba
