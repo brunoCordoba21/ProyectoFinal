@@ -8,20 +8,20 @@ El proyecto busca centralizar la información relacionada con clientes, guías, 
 
 ## 👥 Integrantes
 
-| Integrante            | Rol        |
-| --------------------- | ---------- |
-| **Bruno Cordoba**   | Desarrollo |
-| **Brenda Cordoba**   | Desarrollo |
+| Integrante         | Rol        |
+| ------------------ | ---------- |
+| **Bruno Córdoba**  | Desarrollo |
+| **Brenda Córdoba** | Desarrollo |
 
 ### 📸 Equipo
 
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/173731958?v=4&size=64" width="200">
-  <img src="docs/img/brenda-foto.jpg" width="200">
+  <img src="docs/img/bruno-cordoba.jpg" width="200">
+  <img src="docs/img/brenda-cordoba.jpg" width="200">
 </p>
 
 <p align="center">
-  <b>Bruno Cordoba</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Brenda Cordoba</b>
+  <b>Bruno Córdoba</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Brenda Córdoba</b>
 </p>
 
 ---
@@ -32,7 +32,7 @@ El proyecto surge a partir de la necesidad de contar con una herramienta que per
 
 La utilización de medios informales para coordinar reservas puede dificultar el control de fechas, horarios, clientes y disponibilidad de los guías.
 
-Por este motivo, se propone desarrollar un sistema web que centralice la información relacionada con las reservas, permitiendo a los clientes consultar los servicios disponibles y realizar una reserva, mientras que los responsables del servicio podrán administrar los horarios, guías y reservas realizadas.
+Por este motivo, se propone desarrollar un sistema web que centralice la información relacionada con las reservas, permitiendo a los clientes consultar los servicios disponibles y realizar una reserva, mientras que los guías y administradores podrán gestionar la información necesaria para organizar las excursiones.
 
 El proyecto se encuentra enfocado en resolver específicamente la problemática de **gestión y organización de reservas**, manteniendo un alcance adecuado para el tiempo disponible de desarrollo.
 
@@ -42,17 +42,19 @@ El proyecto se encuentra enfocado en resolver específicamente la problemática 
 
 ### Objetivo general
 
-Desarrollar un sistema web que permita gestionar las reservas de excursiones de pesca, facilitando a los clientes la realización de reservas y a los responsables la administración de los servicios y horarios disponibles.
+Desarrollar un sistema web que permita gestionar las reservas de excursiones de pesca, facilitando a los clientes la realización de reservas y a los guías y administradores la gestión de los servicios, horarios y reservas.
 
 ### Objetivos específicos
 
-* Permitir que los clientes se registren e inicien sesión.
-* Permitir consultar los servicios de pesca disponibles.
+* Permitir que los usuarios se registren e inicien sesión.
+* Permitir a los clientes consultar los servicios disponibles.
 * Permitir consultar fechas y horarios disponibles.
 * Permitir realizar una reserva.
-* Permitir consultar y cancelar una reserva.
+* Permitir consultar y cancelar reservas.
+* Permitir a los guías consultar sus reservas.
+* Permitir a los guías consultar sus horarios y servicios asignados.
 * Permitir administrar clientes.
-* Permitir administrar guías de pesca.
+* Permitir administrar guías.
 * Permitir administrar servicios, fechas y horarios disponibles.
 * Evitar que dos clientes puedan reservar el mismo horario.
 * Permitir consultar y gestionar las reservas realizadas.
@@ -66,7 +68,11 @@ Desarrollar un sistema web que permita gestionar las reservas de excursiones de 
 
 El sistema estará orientado exclusivamente a la **gestión de reservas de excursiones de pesca**.
 
-Los clientes podrán:
+El sistema contará con diferentes tipos de usuarios y permisos.
+
+### 👤 Cliente
+
+El cliente podrá:
 
 * Registrarse e iniciar sesión.
 * Consultar los servicios disponibles.
@@ -75,15 +81,28 @@ Los clientes podrán:
 * Consultar sus reservas.
 * Cancelar reservas.
 
-Los responsables del servicio podrán:
+### 🎣 Guía
 
-* Administrar clientes.
-* Administrar guías.
-* Administrar servicios.
-* Administrar fechas y horarios.
-* Consultar y gestionar las reservas realizadas.
+Cada guía contará con un panel propio desde el cual podrá:
 
-### Limitaciones
+* Iniciar sesión.
+* Consultar sus reservas.
+* Visualizar las fechas y horarios de sus excursiones.
+* Consultar la información necesaria de los clientes asociados a sus reservas.
+* Gestionar el estado de sus reservas.
+
+### 🛠️ Administrador
+
+El administrador podrá:
+
+* Gestionar clientes.
+* Gestionar guías.
+* Gestionar servicios.
+* Gestionar fechas y horarios.
+* Consultar y gestionar todas las reservas.
+* Administrar la información general del sistema.
+
+### 🚫 Limitaciones
 
 Para mantener un alcance adecuado al tiempo disponible para el desarrollo, el proyecto no incluirá funcionalidades relacionadas con:
 
@@ -99,19 +118,101 @@ Para mantener un alcance adecuado al tiempo disponible para el desarrollo, el pr
 
 ---
 
+## 🏗️ Arquitectura del sistema
+
+El sistema estará organizado en tres componentes principales:
+
+```text
+                         🎣 SISTEMA DE RESERVAS
+                                  │
+              ┌───────────────────┼───────────────────┐
+              │                   │                   │
+              ▼                   ▼                   ▼
+        👤 CLIENTE            🎣 GUÍA            🛠️ ADMIN
+              │                   │                   │
+              ▼                   ▼                   ▼
+       ┌────────────┐      ┌────────────┐      ┌────────────┐
+       │  PANEL     │      │  PANEL     │      │  PANEL     │
+       │  CLIENTE   │      │  GUÍA      │      │  ADMIN     │
+       └─────┬──────┘      └─────┬──────┘      └─────┬──────┘
+             │                   │                   │
+             └───────────────────┼───────────────────┘
+                                 ▼
+                       ┌─────────────────┐
+                       │   BACKEND / API │
+                       │                 │
+                       │ Autenticación   │
+                       │ Clientes        │
+                       │ Guías           │
+                       │ Servicios       │
+                       │ Reservas        │
+                       │ Disponibilidad  │
+                       └────────┬────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │    DATABASE     │
+                       │                 │
+                       │ Usuarios        │
+                       │ Guías           │
+                       │ Servicios       │
+                       │ Horarios        │
+                       │ Reservas        │
+                       └─────────────────┘
+```
+
+### Frontend
+
+Se encargará de las interfaces con las que interactuarán los diferentes usuarios:
+
+* Panel del cliente.
+* Panel del guía.
+* Panel del administrador.
+* Formularios.
+* Consulta de servicios.
+* Gestión de reservas.
+
+### Backend / API
+
+Contendrá la lógica del sistema y será responsable de:
+
+* Autenticación de usuarios.
+* Gestión de clientes.
+* Gestión de guías.
+* Gestión de servicios.
+* Gestión de horarios.
+* Gestión de reservas.
+* Control de disponibilidad.
+* Validaciones del sistema.
+
+### Base de datos
+
+Almacenará la información correspondiente a:
+
+* Usuarios.
+* Clientes.
+* Guías.
+* Servicios.
+* Horarios.
+* Reservas.
+
+---
+
 ## 📦 Entregables
 
 Al finalizar el proyecto se entregará:
 
 * Sistema web funcional de reservas.
-* Interfaz para clientes.
-* Interfaz de administración.
+* Panel para clientes.
+* Panel para guías.
+* Panel de administración.
 * Sistema de autenticación.
 * Módulo de gestión de clientes.
 * Módulo de gestión de guías.
 * Módulo de gestión de servicios y horarios.
 * Módulo de gestión de reservas.
 * Base de datos del sistema.
+* Backend/API.
 * Documentación del proyecto.
 * Manual básico de usuario.
 * Código fuente del sistema.
@@ -128,4 +229,4 @@ Al finalizar el proyecto se entregará:
 
 **Proyecto académico**
 
-**Integrantes:** Bruno Cordoba & Brenda Cordoba
+**Integrantes:** Bruno Córdoba & Brenda Córdoba
